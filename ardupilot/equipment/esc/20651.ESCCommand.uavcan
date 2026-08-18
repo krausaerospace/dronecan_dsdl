@@ -1,0 +1,9 @@
+#
+# Unified ESC command with current limiting.
+#
+
+uint5 esc_index             # ESC index (0-31)
+uint3 command_type          # 2=FORCE (amps), 3=SPEED (rad/s)
+float32 command_value       # current in amps, or angular velocity in rad/s
+float32 current_limit_pos   # upper current limit (amps), NaN = ESC default
+float32 current_limit_neg   # lower current limit (amps, typically <= 0), NaN = ESC default
