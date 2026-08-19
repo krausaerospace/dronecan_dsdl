@@ -1,9 +1,15 @@
 #
-# Unified ESC command with current limiting.
+# Unified ESC command: current (thrust) control or speed control, with
+# current limits. Currents are fractions of the ESC's configured maximum
+# motor current, so the flight controller does not need to know the
+# ESC's limits.
 #
 
+uint3 COMMAND_TYPE_FORCE = 2   # command_value is motor current as a fraction of the ESC's maximum, -1..1
+uint3 COMMAND_TYPE_SPEED = 3   # command_value is motor angular velocity in rad/s
+
 uint5 esc_index             # ESC index (0-31)
-uint3 command_type          # 2=FORCE (amps), 3=SPEED (rad/s)
-float32 command_value       # current in amps, or angular velocity in rad/s
-float32 current_limit_pos   # upper current limit (amps), NaN = ESC default
-float32 current_limit_neg   # lower current limit (amps, typically <= 0), NaN = ESC default
+uint3 command_type          # COMMAND_TYPE_FORCE or COMMAND_TYPE_SPEED
+float32 command_value       # current fraction -1..1 (FORCE) or angular velocity in rad/s (SPEED)
+float32 limit_pos           # upper current limit as a fraction of the ESC's maximum, 0..1, NaN = ESC default
+float32 limit_neg           # lower current limit as a fraction of the ESC's maximum, -1..0, NaN = ESC default
